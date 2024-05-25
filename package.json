@@ -1,0 +1,41 @@
+{
+  "name": "d-88-server",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@strapi/plugin-cloud": "4.24.3",
+    "@strapi/plugin-i18n": "4.24.3",
+    "@strapi/plugin-users-permissions": "4.24.3",
+    "@strapi/strapi": "4.24.3",
+    "@strapi/utils": "^4.24.3",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "mysql": "2.18.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "5.3.4",
+    "strapi-plugin-transformer": "^3.1.2",
+    "styled-components": "5.3.3",
+    "url-join": "^5.0.0"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "bf35c0f1-2bef-4d29-b82e-734c51fb4dff"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

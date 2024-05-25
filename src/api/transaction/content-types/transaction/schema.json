@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transactions",
+  "info": {
+    "singularName": "transaction",
+    "pluralName": "transactions",
+    "displayName": "Transaction",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "betValue": {
+      "type": "string"
+    },
+    "betAmount": {
+      "type": "integer"
+    },
+    "match": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::match.match",
+      "inversedBy": "transactions"
+    },
+    "betType": {
+      "type": "enumeration",
+      "enum": [
+        "handicap",
+        "overUnder"
+      ]
+    }
+  }
+}

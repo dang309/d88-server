@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "matches",
+  "info": {
+    "singularName": "match",
+    "pluralName": "matches",
+    "displayName": "Match",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstTeamName": {
+      "type": "string"
+    },
+    "secondTeamName": {
+      "type": "string"
+    },
+    "topTeamName": {
+      "type": "string"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "group",
+        "roundOf16",
+        "quarter",
+        "semi",
+        "final"
+      ]
+    },
+    "firstTeamFlag": {
+      "type": "string"
+    },
+    "secondTeamFlag": {
+      "type": "string"
+    },
+    "result": {
+      "type": "component",
+      "repeatable": false,
+      "component": "match.result"
+    },
+    "handicap": {
+      "type": "component",
+      "repeatable": false,
+      "component": "bet.handicap"
+    },
+    "overUnder": {
+      "type": "component",
+      "repeatable": false,
+      "component": "bet.over-under"
+    },
+    "transactions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::transaction.transaction",
+      "mappedBy": "match"
+    },
+    "datetime": {
+      "type": "datetime"
+    }
+  }
+}

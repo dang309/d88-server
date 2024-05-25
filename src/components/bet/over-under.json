@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_bet_over_unders",
+  "info": {
+    "displayName": "overUnder",
+    "icon": "check",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "threshold": {
+      "type": "decimal"
+    },
+    "overWinRate": {
+      "type": "decimal"
+    },
+    "underWinRate": {
+      "type": "decimal"
+    }
+  }
+}

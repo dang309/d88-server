@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_match_results",
+  "info": {
+    "displayName": "Result",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "firstTeamScore": {
+      "type": "integer"
+    },
+    "secondTeamScore": {
+      "type": "integer"
+    }
+  }
+}

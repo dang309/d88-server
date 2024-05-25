@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_bet_handicaps",
+  "info": {
+    "displayName": "handicap",
+    "icon": "chartBubble"
+  },
+  "options": {},
+  "attributes": {
+    "threshold": {
+      "type": "decimal"
+    },
+    "firstTeamWinRate": {
+      "type": "decimal"
+    },
+    "secondTeamWinRate": {
+      "type": "decimal"
+    }
+  }
+}
