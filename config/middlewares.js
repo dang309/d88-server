@@ -5,10 +5,12 @@ module.exports = [
     name: 'strapi::security',
     config: {
       contentSecurityPolicy: {
-        useDefaults: true,
         directives: {
-          'connect-src': ["'self'", 'http:', 'https:'],
-          upgradeInsecureRequests: null,
+          'default-src': ['self'],
+          'img-src': ['self', 'data:', 'cdn.example.com'],
+          'script-src': ['self', 'api.example.com'],
+          'frame-src': ['none'],
+          // Add other directives as needed
         },
       },
     }
