@@ -7,8 +7,8 @@ module.exports = [
       contentSecurityPolicy: {
         directives: {
           'default-src': ['self'],
-          'img-src': ['self', 'data:', 'http://35.219.140.164:1337'],
-          'script-src': ['self', 'http://35.219.140.164:1337'],
+          'img-src': ['self', 'data:', 'https://35.219.140.164'],
+          'script-src': ['self', 'https://35.219.140.164'],
           'frame-src': ['none'],
           // Add other directives as needed
         },
