@@ -15,7 +15,14 @@ module.exports = [
       },
     }
   },
-  'strapi::cors',
+  {
+    name: 'strapi::cors',
+    config: {
+      enabled: true,
+      header: '*',
+      origin: ['http://localhost:3030', 'https://d88-cient.vercel.app']
+    }
+  },
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',
