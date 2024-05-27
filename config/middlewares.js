@@ -7,8 +7,8 @@ module.exports = [
       contentSecurityPolicy: {
         directives: {
           'default-src': ['self'],
-          'img-src': ['self', 'data:', 'https://35.219.140.164'],
-          'script-src': ['self', 'https://35.219.140.164'],
+          'img-src': ['self', 'data:', 'https://danguyen.site'],
+          'script-src': ['self', 'https://danguyen.site'],
           'frame-src': ['none'],
           // Add other directives as needed
         },
@@ -20,7 +20,7 @@ module.exports = [
     config: {
       enabled: true,
       header: '*',
-      origin: ['http://localhost:3030', 'https://d88-cient.vercel.app']
+      origin: ['http://localhost:3030', 'https://d88-bet.vercel.app']
     }
   },
   'strapi::poweredBy',

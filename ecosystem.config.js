@@ -16,7 +16,7 @@ module.exports = {
         DATABASE_PORT: '3306',
         DATABASE_NAME: 'd88', // DB name under 'Configuration' tab
         DATABASE_USERNAME: 'dangn', // default username
-        DATABASE_PASSWORD: '@@HaiDang309@@'
+        DATABASE_PASSWORD: '192837'
       },
     },
   ],
