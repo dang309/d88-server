@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "withdraws",
+  "info": {
+    "singularName": "withdraw",
+    "pluralName": "withdraws",
+    "displayName": "Withdraw"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "amount": {
+      "type": "integer"
+    }
+  }
+}

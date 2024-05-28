@@ -408,6 +408,40 @@ export interface ApiMatchMatch extends Schema.CollectionType {
   };
 }
 
+export interface ApiRechargeRecharge extends Schema.CollectionType {
+  collectionName: 'recharges';
+  info: {
+    singularName: 'recharge';
+    pluralName: 'recharges';
+    displayName: 'Recharge';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::recharge.recharge',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    amount: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::recharge.recharge',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::recharge.recharge',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTransactionTransaction extends Schema.CollectionType {
   collectionName: 'transactions';
   info: {
@@ -444,6 +478,40 @@ export interface ApiTransactionTransaction extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::transaction.transaction',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiWithdrawWithdraw extends Schema.CollectionType {
+  collectionName: 'withdraws';
+  info: {
+    singularName: 'withdraw';
+    pluralName: 'withdraws';
+    displayName: 'Withdraw';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::withdraw.withdraw',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    amount: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::withdraw.withdraw',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::withdraw.withdraw',
       'oneToOne',
       'admin::user'
     > &
@@ -888,7 +956,9 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::match.match': ApiMatchMatch;
+      'api::recharge.recharge': ApiRechargeRecharge;
       'api::transaction.transaction': ApiTransactionTransaction;
+      'api::withdraw.withdraw': ApiWithdrawWithdraw;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;

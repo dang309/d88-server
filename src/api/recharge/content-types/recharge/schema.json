@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recharges",
+  "info": {
+    "singularName": "recharge",
+    "pluralName": "recharges",
+    "displayName": "Recharge"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "amount": {
+      "type": "integer"
+    }
+  }
+}
