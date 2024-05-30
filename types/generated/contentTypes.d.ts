@@ -362,6 +362,35 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiBetBet extends Schema.CollectionType {
+  collectionName: 'bets';
+  info: {
+    singularName: 'bet';
+    pluralName: 'bets';
+    displayName: 'Bet';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    match: Attribute.Relation<'api::bet.bet', 'oneToOne', 'api::match.match'>;
+    user: Attribute.Relation<
+      'api::bet.bet',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    amount: Attribute.Integer;
+    value: Attribute.String;
+    type: Attribute.Enumeration<['handicap', 'overUnder']>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::bet.bet', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::bet.bet', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface ApiMatchMatch extends Schema.CollectionType {
   collectionName: 'matches';
   info: {
@@ -385,12 +414,8 @@ export interface ApiMatchMatch extends Schema.CollectionType {
     result: Attribute.Component<'match.result'>;
     handicap: Attribute.Component<'bet.handicap'>;
     overUnder: Attribute.Component<'bet.over-under'>;
-    transactions: Attribute.Relation<
-      'api::match.match',
-      'oneToMany',
-      'api::transaction.transaction'
-    >;
     datetime: Attribute.DateTime;
+    code: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -408,33 +433,40 @@ export interface ApiMatchMatch extends Schema.CollectionType {
   };
 }
 
-export interface ApiRechargeRecharge extends Schema.CollectionType {
-  collectionName: 'recharges';
+export interface ApiPredictionPrediction extends Schema.CollectionType {
+  collectionName: 'predictions';
   info: {
-    singularName: 'recharge';
-    pluralName: 'recharges';
-    displayName: 'Recharge';
+    singularName: 'prediction';
+    pluralName: 'predictions';
+    displayName: 'Prediction';
+    description: '';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
     user: Attribute.Relation<
-      'api::recharge.recharge',
+      'api::prediction.prediction',
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    amount: Attribute.Integer;
+    match: Attribute.Relation<
+      'api::prediction.prediction',
+      'oneToOne',
+      'api::match.match'
+    >;
+    firstTeamScore: Attribute.Integer;
+    secondTeamScore: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::recharge.recharge',
+      'api::prediction.prediction',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::recharge.recharge',
+      'api::prediction.prediction',
       'oneToOne',
       'admin::user'
     > &
@@ -451,67 +483,26 @@ export interface ApiTransactionTransaction extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    user: Attribute.Relation<
-      'api::transaction.transaction',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    betValue: Attribute.String;
-    betAmount: Attribute.Integer;
-    match: Attribute.Relation<
-      'api::transaction.transaction',
-      'manyToOne',
-      'api::match.match'
-    >;
-    betType: Attribute.Enumeration<['handicap', 'overUnder']>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::transaction.transaction',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::transaction.transaction',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiWithdrawWithdraw extends Schema.CollectionType {
-  collectionName: 'withdraws';
-  info: {
-    singularName: 'withdraw';
-    pluralName: 'withdraws';
-    displayName: 'Withdraw';
-  };
-  options: {
     draftAndPublish: false;
   };
   attributes: {
     user: Attribute.Relation<
-      'api::withdraw.withdraw',
+      'api::transaction.transaction',
       'oneToOne',
       'plugin::users-permissions.user'
     >;
     amount: Attribute.Integer;
+    type: Attribute.Enumeration<['recharge', 'withdraw']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::withdraw.withdraw',
+      'api::transaction.transaction',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::withdraw.withdraw',
+      'api::transaction.transaction',
       'oneToOne',
       'admin::user'
     > &
@@ -747,53 +738,6 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -928,6 +872,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.role'
     >;
     balance: Attribute.Integer;
+    avatarUrl: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -945,6 +890,53 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -955,18 +947,18 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::bet.bet': ApiBetBet;
       'api::match.match': ApiMatchMatch;
-      'api::recharge.recharge': ApiRechargeRecharge;
+      'api::prediction.prediction': ApiPredictionPrediction;
       'api::transaction.transaction': ApiTransactionTransaction;
-      'api::withdraw.withdraw': ApiWithdrawWithdraw;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
-      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'plugin::i18n.locale': PluginI18NLocale;
     }
   }
 }

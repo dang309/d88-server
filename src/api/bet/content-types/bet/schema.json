@@ -1,17 +1,21 @@
 {
   "kind": "collectionType",
-  "collectionName": "transactions",
+  "collectionName": "bets",
   "info": {
-    "singularName": "transaction",
-    "pluralName": "transactions",
-    "displayName": "Transaction",
-    "description": ""
+    "singularName": "bet",
+    "pluralName": "bets",
+    "displayName": "Bet"
   },
   "options": {
     "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
+    "match": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::match.match"
+    },
     "user": {
       "type": "relation",
       "relation": "oneToOne",
@@ -20,11 +24,14 @@
     "amount": {
       "type": "integer"
     },
+    "value": {
+      "type": "string"
+    },
     "type": {
       "type": "enumeration",
       "enum": [
-        "recharge",
-        "withdraw"
+        "handicap",
+        "overUnder"
       ]
     }
   }

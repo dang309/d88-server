@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * recharge service
+ * bet service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::recharge.recharge');
+module.exports = createCoreService('api::bet.bet');

@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "transactions",
+  "collectionName": "predictions",
   "info": {
-    "singularName": "transaction",
-    "pluralName": "transactions",
-    "displayName": "Transaction",
+    "singularName": "prediction",
+    "pluralName": "predictions",
+    "displayName": "Prediction",
     "description": ""
   },
   "options": {
@@ -17,15 +17,16 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
     },
-    "amount": {
+    "match": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::match.match"
+    },
+    "firstTeamScore": {
       "type": "integer"
     },
-    "type": {
-      "type": "enumeration",
-      "enum": [
-        "recharge",
-        "withdraw"
-      ]
+    "secondTeamScore": {
+      "type": "integer"
     }
   }
 }

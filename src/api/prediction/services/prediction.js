@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * withdraw service
+ * prediction service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::withdraw.withdraw');
+module.exports = createCoreService('api::prediction.prediction');

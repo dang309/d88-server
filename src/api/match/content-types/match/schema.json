@@ -52,14 +52,11 @@
       "repeatable": false,
       "component": "bet.over-under"
     },
-    "transactions": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::transaction.transaction",
-      "mappedBy": "match"
-    },
     "datetime": {
       "type": "datetime"
+    },
+    "code": {
+      "type": "string"
     }
   }
 }

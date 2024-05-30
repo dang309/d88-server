@@ -67,6 +67,9 @@
     },
     "balance": {
       "type": "integer"
+    },
+    "avatarUrl": {
+      "type": "string"
     }
   }
 }

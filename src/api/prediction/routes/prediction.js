@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * recharge router
+ * prediction router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::recharge.recharge');
+module.exports = createCoreRouter('api::prediction.prediction');
