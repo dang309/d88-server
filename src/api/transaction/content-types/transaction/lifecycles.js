@@ -9,8 +9,15 @@ const TRANSACTION_TYPE = {
 module.exports = {
   async beforeCreate(event) {
     const { data } = event.params;
+    let userId;
 
-    const userId = data.user?.connect[0]?.id;
+    const ctx = strapi.requestContext.get();
+    if (ctx.request.url.startsWith("/api")) {
+      userId = ctx.state.user.id;
+    } else if (ctx.request.url.startsWith("/content-manager")) {
+      userId = data.user?.connect[0]?.id;
+    }
+
     if (userId) {
       const user = await strapi.entityService.findOne(
         "plugin::users-permissions.user",
@@ -32,8 +39,15 @@ module.exports = {
   async afterCreate(event) {
     const { result } = event;
     const { data } = event.params;
+    let userId;
 
-    const userId = data.user?.connect[0]?.id;
+    const ctx = strapi.requestContext.get();
+    if (ctx.request.url.startsWith("/api")) {
+      userId = ctx.state.user.id;
+    } else if (ctx.request.url.startsWith("/content-manager")) {
+      userId = data.user?.connect[0]?.id;
+    }
+
     if (userId) {
       const user = await strapi.entityService.findOne(
         "plugin::users-permissions.user",
