@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prediction_results",
+  "info": {
+    "singularName": "prediction-result",
+    "pluralName": "prediction-results",
+    "displayName": "Prediction Result",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "match": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::match.match"
+    },
+    "winner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "prize": {
+      "type": "integer"
+    }
+  }
+}
