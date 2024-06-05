@@ -70,9 +70,6 @@
     },
     "avatarUrl": {
       "type": "string"
-    },
-    "bonus": {
-      "type": "integer"
     }
   }
 }

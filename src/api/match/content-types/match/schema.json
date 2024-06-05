@@ -56,7 +56,8 @@
       "type": "datetime"
     },
     "code": {
-      "type": "string"
+      "type": "uid",
+      "targetField": "firstTeamName"
     }
   }
 }

@@ -55,19 +55,20 @@ module.exports = {
       );
 
       let balance = user.balance;
-      const amount = parseInt(result.amount, 10);
+      const amount = result.amount;
       const type = result.type;
+      const data = {};
 
       if (type === TRANSACTION_TYPE.RECHARGE) balance += amount;
       else if (type === TRANSACTION_TYPE.WITHDRAW) balance -= amount;
 
-      const newEntry = await strapi.entityService.update(
+      data.balance = balance;
+
+      await strapi.entityService.update(
         "plugin::users-permissions.user",
         user.id,
         {
-          data: {
-            balance,
-          },
+          data,
         }
       );
     }

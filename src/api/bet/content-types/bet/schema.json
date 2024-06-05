@@ -4,7 +4,8 @@
   "info": {
     "singularName": "bet",
     "pluralName": "bets",
-    "displayName": "Bet"
+    "displayName": "Bet",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -33,6 +34,22 @@
         "handicap",
         "overUnder"
       ]
+    },
+    "winOrLoseType": {
+      "type": "enumeration",
+      "enum": [
+        "draw",
+        "winFull",
+        "winHalf",
+        "loseFull",
+        "loseHalf"
+      ]
+    },
+    "profit": {
+      "type": "decimal"
+    },
+    "loss": {
+      "type": "decimal"
     }
   }
 }

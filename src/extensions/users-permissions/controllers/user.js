@@ -215,6 +215,17 @@ module.exports = {
     const sanitizedQuery = await sanitizeQuery(query, ctx);
     const user = await getService('user').fetch(authUser.id, sanitizedQuery);
 
+    if(user.isFirstLogin === true) {
+      await strapi.query('plugin::users-permissions.user').update({
+        where: {
+          id: user.id
+        },
+        data: {
+          isFirstLogin: false
+        }
+      });
+    }
+
     ctx.body = await sanitizeOutput(user, ctx);
   },
 };

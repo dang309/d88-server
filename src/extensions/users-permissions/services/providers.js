@@ -98,13 +98,9 @@ module.exports = ({ strapi }) => {
       confirmed: true,
     };
 
-    console.log({newUser})
-
     const createdUser = await strapi
       .query('plugin::users-permissions.user')
       .create({ data: newUser });
-
-    console.log({createdUser})
 
     return createdUser;
   };

@@ -90,6 +90,17 @@ module.exports = {
         throw new ApplicationError('Your account has been blocked by an administrator');
       }
 
+      if(user.isFirstLogin === true) {
+        await strapi.query('plugin::users-permissions.user').update({
+          where: {
+            id: user.id
+          },
+          data: {
+            isFirstLogin: false
+          }
+        });
+      }
+
       return ctx.send({
         jwt: getService('jwt').issue({ id: user.id }),
         user: await sanitizeUser(user, ctx),
@@ -102,6 +113,17 @@ module.exports = {
 
       if (user.blocked) {
         throw new ForbiddenError('Your account has been blocked by an administrator');
+      }
+
+      if(user.isFirstLogin === true) {
+        await strapi.query('plugin::users-permissions.user').update({
+          where: {
+            id: user.id
+          },
+          data: {
+            isFirstLogin: false
+          }
+        });
       }
 
       return ctx.send({
@@ -390,6 +412,7 @@ module.exports = {
       email: email.toLowerCase(),
       username,
       confirmed: !settings.email_confirmation,
+      isFirstLogin: false
     };
 
     const user = await getService('user').add(newUser);
