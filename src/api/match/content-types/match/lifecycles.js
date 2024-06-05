@@ -68,6 +68,8 @@ async function _updatePredictions(updatedMatch) {
 
       if (items && items.length) continue;
 
+      let prize = predictions.length / userIdsWithCorrectPredictions.length;
+
       await strapi.entityService.create(
         "api::prediction-result.prediction-result",
         {
@@ -75,6 +77,7 @@ async function _updatePredictions(updatedMatch) {
             match: matchId,
             winner: userId,
             code,
+            prize,
           },
         }
       );
@@ -84,9 +87,7 @@ async function _updatePredictions(updatedMatch) {
         userId
       );
 
-      const balance =
-        user.balance +
-        predictions.length / userIdsWithCorrectPredictions.length;
+      const balance = user.balance + prize;
 
       await strapi.entityService.update(
         "plugin::users-permissions.user",
@@ -94,7 +95,6 @@ async function _updatePredictions(updatedMatch) {
         {
           data: {
             balance,
-            winner: userId,
           },
         }
       );
@@ -186,11 +186,13 @@ async function _updateBetResult(updatedMatch) {
     let loss = 0;
     let balance = user.balance;
 
-    let maxProfit = 0
+    let maxProfit = 0;
 
-    const _bet = await strapi.entityService.findOne('api::bet.bet', betId, {fields: ['winOrLoseType']})
+    const _bet = await strapi.entityService.findOne("api::bet.bet", betId, {
+      fields: ["winOrLoseType"],
+    });
 
-    if(_bet && _bet.winOrLoseType) continue
+    if (_bet && _bet.winOrLoseType) continue;
 
     if (type === "handicap") {
       maxProfit =
@@ -213,18 +215,22 @@ async function _updateBetResult(updatedMatch) {
         }
       } else if (isOneQuater(handicapThreshold)) {
         if (value === winner) {
-          if (diffScoreHandicap >= 0.25 && diffScoreHandicap < 0.75) winOrLoseType = "winHalf";
+          if (diffScoreHandicap >= 0.25 && diffScoreHandicap < 0.75)
+            winOrLoseType = "winHalf";
           else if (diffScoreHandicap >= 0.75) winOrLoseType = "winFull";
         } else {
-          if (diffScoreHandicap >= 0.25 && diffScoreHandicap < 0.75) winOrLoseType = "loseHalf";
+          if (diffScoreHandicap >= 0.25 && diffScoreHandicap < 0.75)
+            winOrLoseType = "loseHalf";
           else if (diffScoreHandicap >= 0.75) winOrLoseType = "loseFull";
         }
       } else if (isThreeQuater(handicapThreshold)) {
         if (value === winner) {
-          if (diffScoreHandicap >= 0.25 && diffScoreHandicap < 0.75) winOrLoseType = "winHalf";
+          if (diffScoreHandicap >= 0.25 && diffScoreHandicap < 0.75)
+            winOrLoseType = "winHalf";
           else if (diffScoreHandicap >= 0.75) winOrLoseType = "winFull";
         } else {
-          if (diffScoreHandicap >= 0.25 && diffScoreHandicap < 0.75) winOrLoseType = "loseHalf";
+          if (diffScoreHandicap >= 0.25 && diffScoreHandicap < 0.75)
+            winOrLoseType = "loseHalf";
           else if (diffScoreHandicap >= 0.75) winOrLoseType = "loseFull";
         }
       }
