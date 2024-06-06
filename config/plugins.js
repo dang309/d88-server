@@ -14,7 +14,7 @@ module.exports = () => ({
         allowedFields: ["avatarUrl"],
       },
       jwt: {
-        expiresIn: '2m'
+        expiresIn: '3 months'
       }
     },
   },
