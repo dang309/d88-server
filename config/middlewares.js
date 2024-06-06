@@ -10,7 +10,6 @@ module.exports = [
           'img-src': ['self', 'data:', 'https://danguyen.site'],
           'script-src': ['self', 'https://danguyen.site'],
           'frame-src': ['none'],
-          // Add other directives as needed
         },
       },
     }
@@ -18,7 +17,6 @@ module.exports = [
   {
     name: 'strapi::cors',
     config: {
-      enabled: true,
       header: '*',
       origin: ['http://localhost:3030', 'https://d88-bet.vercel.app']
     }
