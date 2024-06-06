@@ -4,6 +4,13 @@ const { ApplicationError } = errors;
 const _ = require("lodash");
 
 module.exports = {
+  async beforeCreate(event) {
+    const {data} = event.params
+
+    const {firstTeamName, secondTeamName, type} = data;
+
+    data.code = `${type.toLowerCase()}-${firstTeamName.toLowerCase()}-${secondTeamName.toLowerCase()}`
+  },
   async afterUpdate(event) {
     const { result: updatedMatch } = event;
     const { data } = event.params;
