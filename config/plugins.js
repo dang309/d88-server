@@ -13,6 +13,9 @@ module.exports = () => ({
       register: {
         allowedFields: ["avatarUrl"],
       },
+      jwt: {
+        expiresIn: '2m'
+      }
     },
   },
 });
