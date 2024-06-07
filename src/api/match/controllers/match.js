@@ -10,10 +10,9 @@ const moment = require('moment-timezone');
 module.exports = createCoreController("api::match.match", ({ strapi }) => {
   return {
     async find(ctx) {
-      // const { data, meta } = await super.find(ctx);
       const { data, meta } = await strapi
         .service("api::match.match")
-        .find(ctx.params);
+        .find(ctx.request.query);
 
       return { data, meta };
     },
@@ -27,6 +26,7 @@ module.exports = createCoreController("api::match.match", ({ strapi }) => {
         },
         sort: "datetime",
         limit: 1,
+        populate: ['result', 'handicap', 'overUnder']
       });
 
       if (matches && matches.length) {

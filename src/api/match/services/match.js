@@ -21,6 +21,8 @@ module.exports = createCoreService("api::match.match", ({ strapi }) => {
       };
       let data = {};
 
+      console.log({params})
+
       const items = await strapi.entityService.findMany("api::match.match", {
         ...params,
       });
