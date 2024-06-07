@@ -18,6 +18,7 @@ module.exports = createCoreController("api::match.match", ({ strapi }) => {
       return { data, meta };
     },
     async getComing(ctx) {
+      let data = {};
       const matches = await strapi.entityService.findMany("api::match.match", {
         filters: {
           datetime: {
@@ -25,18 +26,20 @@ module.exports = createCoreController("api::match.match", ({ strapi }) => {
           },
         },
         sort: "datetime",
+        limit: 1,
       });
 
-      if (matches && matches.length)
-        matches[0].datetime = moment(matches[0].datetime)
+      if (matches && matches.length) {
+        const comingMatch = matches[0];
+        comingMatch.datetime = moment(comingMatch.datetime)
           .local()
           .format("DD/MM HH:mm");
-      return {
-        data: matches[0],
-      };
+
+        data = comingMatch;
+      }
 
       return {
-        data: [],
+        data,
       };
     },
   };
