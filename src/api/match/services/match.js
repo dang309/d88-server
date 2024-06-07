@@ -32,9 +32,13 @@ module.exports = createCoreService("api::match.match", ({ strapi }) => {
 
           const date = moment(item.datetime).format("DD/MM");
 
+          item.datetime = item.datetime.format('DD/MM HH:mm')
+
           if (!_.has(data, date)) {
             data[date] = [item];
-          } else data[date].push(item);
+          } else {
+            data[date].push(item);
+          }
         }
       }
 
