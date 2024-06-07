@@ -15,8 +15,6 @@ module.exports = createCoreController("api::match.match", ({ strapi }) => {
         .service("api::match.match")
         .find(ctx.params);
 
-      console.log({ data, meta });
-
       return { data, meta };
     },
     async getComing(ctx) {
@@ -30,9 +28,12 @@ module.exports = createCoreController("api::match.match", ({ strapi }) => {
       });
 
       if (matches && matches.length)
-        return {
-          data: matches[0],
-        };
+        matches[0].datetime = moment(matches[0].datetime)
+          .local()
+          .format("DD/MM HH:mm");
+      return {
+        data: matches[0],
+      };
 
       return {
         data: [],
