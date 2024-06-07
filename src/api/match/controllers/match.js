@@ -29,19 +29,13 @@ module.exports = createCoreController("api::match.match", ({ strapi }) => {
         limit: 1,
       });
 
-      console.log({matches})
-
       if (matches && matches.length) {
         const comingMatch = matches[0];
-        console.log(comingMatch.datetime)
         comingMatch.datetime = moment(comingMatch.datetime)
-          .local()
+          .locale('vi')
           .format("DD/MM HH:mm");
-          console.log(comingMatch.datetime)
         data = comingMatch;
       }
-
-      console.log({data})
 
       return {
         data,

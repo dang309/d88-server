@@ -27,7 +27,7 @@ module.exports = createCoreService("api::match.match", ({ strapi }) => {
 
       if (items && items.length) {
         for (const item of items) {
-          item.datetime = moment(item.datetime).local();
+          item.datetime = moment(item.datetime).locale('vi');
           item.time = moment(item.datetime).format("HH:mm");
 
           const date = moment(item.datetime).format("DD/MM");
