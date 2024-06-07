@@ -5,7 +5,7 @@
  */
 
 const { createCoreController } = require("@strapi/strapi").factories;
-const moment = require("moment");
+const moment = require('moment-timezone');
 
 module.exports = createCoreController("api::match.match", ({ strapi }) => {
   return {
@@ -32,7 +32,7 @@ module.exports = createCoreController("api::match.match", ({ strapi }) => {
       if (matches && matches.length) {
         const comingMatch = matches[0];
         comingMatch.datetime = moment(comingMatch.datetime)
-          .locale('vi')
+          .tz('Asia/Ho_Chi_Minh')
           .format("DD/MM HH:mm");
         data = comingMatch;
       }

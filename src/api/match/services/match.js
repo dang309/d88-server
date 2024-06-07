@@ -5,7 +5,7 @@
  */
 
 const { createCoreService } = require("@strapi/strapi").factories;
-const moment = require("moment");
+const moment = require('moment-timezone');
 const _ = require("lodash");
 
 module.exports = createCoreService("api::match.match", ({ strapi }) => {
@@ -27,7 +27,7 @@ module.exports = createCoreService("api::match.match", ({ strapi }) => {
 
       if (items && items.length) {
         for (const item of items) {
-          item.datetime = moment(item.datetime).locale('vi');
+          item.datetime = moment(item.datetime).tz('Asia/Ho_Chi_Minh');
           item.time = moment(item.datetime).format("HH:mm");
 
           const date = moment(item.datetime).format("DD/MM");

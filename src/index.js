@@ -1,7 +1,5 @@
 'use strict';
 
-require('moment/locale/vi');
-
 module.exports = {
   /**
    * An asynchronous register function that runs before
