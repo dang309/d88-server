@@ -9,6 +9,16 @@ const moment = require("moment");
 
 module.exports = createCoreController("api::match.match", ({ strapi }) => {
   return {
+    async find(ctx) {
+      // const { data, meta } = await super.find(ctx);
+      const { data, meta } = await strapi
+        .service("api::match.match")
+        .find(ctx.params);
+
+      console.log({ data, meta });
+
+      return { data, meta };
+    },
     async getComing(ctx) {
       const matches = await strapi.entityService.findMany("api::match.match", {
         filters: {
