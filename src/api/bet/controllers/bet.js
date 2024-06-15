@@ -113,5 +113,35 @@ module.exports = createCoreController("api::bet.bet", ({ strapi }) => {
 
       return this.transformResponse(sanitizedResults);
     },
+    async delete(ctx) {
+      const { id } = ctx.request.params;
+      const user = ctx.state.user;
+
+      if (id) {
+        const bet = await strapi.entityService.findOne("api::bet.bet", id);
+
+        if (bet) {
+          const betAmount = bet.amount;
+          const balance = user.balance + betAmount;
+
+          const response = await Promise.all([
+            super.delete(ctx),
+            strapi.entityService.update(
+              "plugin::users-permissions.user",
+              user.id,
+              {
+                data: {
+                  balance,
+                },
+              }
+            ),
+          ]);
+
+          return response;
+        }
+      }
+
+      return ctx.badRequest("Hủy cược thất bại!");
+    },
   };
 });
