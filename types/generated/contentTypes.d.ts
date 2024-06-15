@@ -362,203 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiBetBet extends Schema.CollectionType {
-  collectionName: 'bets';
-  info: {
-    singularName: 'bet';
-    pluralName: 'bets';
-    displayName: 'Bet';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    match: Attribute.Relation<'api::bet.bet', 'oneToOne', 'api::match.match'>;
-    user: Attribute.Relation<
-      'api::bet.bet',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    amount: Attribute.Integer;
-    value: Attribute.String;
-    type: Attribute.Enumeration<['handicap', 'overUnder']>;
-    winOrLoseType: Attribute.Enumeration<
-      ['draw', 'winFull', 'winHalf', 'loseFull', 'loseHalf']
-    >;
-    profit: Attribute.Decimal;
-    loss: Attribute.Decimal;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::bet.bet', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::bet.bet', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiMatchMatch extends Schema.CollectionType {
-  collectionName: 'matches';
-  info: {
-    singularName: 'match';
-    pluralName: 'matches';
-    displayName: 'Match';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    firstTeamName: Attribute.String;
-    secondTeamName: Attribute.String;
-    topTeamName: Attribute.String;
-    type: Attribute.Enumeration<
-      ['group', 'roundOf16', 'quarter', 'semi', 'final']
-    >;
-    firstTeamFlag: Attribute.String;
-    secondTeamFlag: Attribute.String;
-    result: Attribute.Component<'match.result'>;
-    handicap: Attribute.Component<'bet.handicap'>;
-    overUnder: Attribute.Component<'bet.over-under'>;
-    datetime: Attribute.DateTime;
-    code: Attribute.UID<'api::match.match', 'firstTeamName'>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::match.match',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::match.match',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPredictionPrediction extends Schema.CollectionType {
-  collectionName: 'predictions';
-  info: {
-    singularName: 'prediction';
-    pluralName: 'predictions';
-    displayName: 'Prediction';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    user: Attribute.Relation<
-      'api::prediction.prediction',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    match: Attribute.Relation<
-      'api::prediction.prediction',
-      'oneToOne',
-      'api::match.match'
-    >;
-    firstTeamScore: Attribute.Integer;
-    secondTeamScore: Attribute.Integer;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::prediction.prediction',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::prediction.prediction',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiPredictionResultPredictionResult
-  extends Schema.CollectionType {
-  collectionName: 'prediction_results';
-  info: {
-    singularName: 'prediction-result';
-    pluralName: 'prediction-results';
-    displayName: 'Prediction Result';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    match: Attribute.Relation<
-      'api::prediction-result.prediction-result',
-      'oneToOne',
-      'api::match.match'
-    >;
-    winner: Attribute.Relation<
-      'api::prediction-result.prediction-result',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    prize: Attribute.Integer;
-    isRead: Attribute.Boolean & Attribute.DefaultTo<false>;
-    code: Attribute.UID;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::prediction-result.prediction-result',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::prediction-result.prediction-result',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiTransactionTransaction extends Schema.CollectionType {
-  collectionName: 'transactions';
-  info: {
-    singularName: 'transaction';
-    pluralName: 'transactions';
-    displayName: 'Transaction';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    user: Attribute.Relation<
-      'api::transaction.transaction',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    amount: Attribute.Integer;
-    type: Attribute.Enumeration<['recharge', 'withdraw']>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::transaction.transaction',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::transaction.transaction',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -922,6 +725,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     balance: Attribute.Decimal;
     avatarUrl: Attribute.String;
+    bonus: Attribute.Decimal;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -986,6 +790,203 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiBetBet extends Schema.CollectionType {
+  collectionName: 'bets';
+  info: {
+    singularName: 'bet';
+    pluralName: 'bets';
+    displayName: 'Bet';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    match: Attribute.Relation<'api::bet.bet', 'oneToOne', 'api::match.match'>;
+    user: Attribute.Relation<
+      'api::bet.bet',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    amount: Attribute.Decimal;
+    value: Attribute.String;
+    type: Attribute.Enumeration<['handicap', 'overUnder']>;
+    winOrLoseType: Attribute.Enumeration<
+      ['draw', 'winFull', 'winHalf', 'loseFull', 'loseHalf']
+    >;
+    profit: Attribute.Decimal;
+    loss: Attribute.Decimal;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::bet.bet', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::bet.bet', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMatchMatch extends Schema.CollectionType {
+  collectionName: 'matches';
+  info: {
+    singularName: 'match';
+    pluralName: 'matches';
+    displayName: 'Match';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    firstTeamName: Attribute.String;
+    secondTeamName: Attribute.String;
+    topTeamName: Attribute.String;
+    type: Attribute.Enumeration<
+      ['group', 'roundOf16', 'quarter', 'semi', 'final']
+    >;
+    firstTeamFlag: Attribute.String;
+    secondTeamFlag: Attribute.String;
+    result: Attribute.Component<'match.result'>;
+    handicap: Attribute.Component<'bet.handicap'>;
+    overUnder: Attribute.Component<'bet.over-under'>;
+    datetime: Attribute.DateTime;
+    code: Attribute.UID<'api::match.match', 'firstTeamName'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::match.match',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::match.match',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPredictionPrediction extends Schema.CollectionType {
+  collectionName: 'predictions';
+  info: {
+    singularName: 'prediction';
+    pluralName: 'predictions';
+    displayName: 'Prediction';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::prediction.prediction',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    match: Attribute.Relation<
+      'api::prediction.prediction',
+      'oneToOne',
+      'api::match.match'
+    >;
+    firstTeamScore: Attribute.Integer;
+    secondTeamScore: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::prediction.prediction',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::prediction.prediction',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPredictionResultPredictionResult
+  extends Schema.CollectionType {
+  collectionName: 'prediction_results';
+  info: {
+    singularName: 'prediction-result';
+    pluralName: 'prediction-results';
+    displayName: 'Prediction Result';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    match: Attribute.Relation<
+      'api::prediction-result.prediction-result',
+      'oneToOne',
+      'api::match.match'
+    >;
+    winner: Attribute.Relation<
+      'api::prediction-result.prediction-result',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    prize: Attribute.Integer;
+    isRead: Attribute.Boolean & Attribute.DefaultTo<false>;
+    code: Attribute.UID;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::prediction-result.prediction-result',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::prediction-result.prediction-result',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTransactionTransaction extends Schema.CollectionType {
+  collectionName: 'transactions';
+  info: {
+    singularName: 'transaction';
+    pluralName: 'transactions';
+    displayName: 'Transaction';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::transaction.transaction',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    amount: Attribute.Integer;
+    type: Attribute.Enumeration<['recharge', 'withdraw']>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::transaction.transaction',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::transaction.transaction',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -996,11 +997,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::bet.bet': ApiBetBet;
-      'api::match.match': ApiMatchMatch;
-      'api::prediction.prediction': ApiPredictionPrediction;
-      'api::prediction-result.prediction-result': ApiPredictionResultPredictionResult;
-      'api::transaction.transaction': ApiTransactionTransaction;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -1009,6 +1005,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::bet.bet': ApiBetBet;
+      'api::match.match': ApiMatchMatch;
+      'api::prediction.prediction': ApiPredictionPrediction;
+      'api::prediction-result.prediction-result': ApiPredictionResultPredictionResult;
+      'api::transaction.transaction': ApiTransactionTransaction;
     }
   }
 }

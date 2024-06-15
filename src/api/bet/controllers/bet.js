@@ -7,6 +7,9 @@
 const { createCoreController } = require("@strapi/strapi").factories;
 const _ = require("lodash");
 
+const MIN_BET_AMOUNT = 1;
+const MAX_BET_AMOUNT = 55;
+
 module.exports = createCoreController("api::bet.bet", ({ strapi }) => {
   return {
     async create(ctx) {
@@ -20,8 +23,10 @@ module.exports = createCoreController("api::bet.bet", ({ strapi }) => {
       const user = ctx.state.user;
       let balance = _.get(user, "balance");
 
-      if (amount < 1) return ctx.badRequest("Tối thiểu là 1 chip!");
-      if (amount % 1 !== 0) return ctx.badRequest("Chip không được lẻ!");
+      if (amount < MIN_BET_AMOUNT)
+        return ctx.badRequest(`Tối thiểu là ${MIN_BET_AMOUNT} chip!`);
+      if (amount > MAX_BET_AMOUNT)
+        return ctx.badRequest(`Tối đa là ${MAX_BET_AMOUNT} chip!`);
       if (amount > balance) return ctx.badRequest("Không đủ chip!");
 
       balance -= amount;

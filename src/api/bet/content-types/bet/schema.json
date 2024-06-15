@@ -23,7 +23,7 @@
       "target": "plugin::users-permissions.user"
     },
     "amount": {
-      "type": "integer"
+      "type": "decimal"
     },
     "value": {
       "type": "string"
