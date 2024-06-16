@@ -108,14 +108,15 @@ async function _updateBetResult(updatedMatch) {
     },
   });
 
-  console.log({ bets });
-
   for (const bet of bets) {
     const { id: betId, value, type, amount, handicap, overUnder, winOrLoseType, user } = bet;
     let _winOrLoseType = winOrLoseType || "";
     let profit = 0;
     let loss = 0;
-    let balance = user.balance;
+
+    const _user = await strapi.entityService.findOne("plugin::users-permissions.user", user.id);
+
+    let balance = _user.balance;
 
     let maxProfit = 0;
 
@@ -242,7 +243,7 @@ async function _updateBetResult(updatedMatch) {
       }
     }
 
-    await strapi.entityService.update("plugin::users-permissions.user", user.id, {
+    await strapi.entityService.update("plugin::users-permissions.user", _user.id, {
       data: {
         balance,
       },
