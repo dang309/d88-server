@@ -1,10 +1,10 @@
-import type { Schema, Attribute } from '@strapi/strapi';
+import type { Schema, Attribute } from "@strapi/strapi";
 
 export interface BetHandicap extends Schema.Component {
-  collectionName: 'components_bet_handicaps';
+  collectionName: "components_bet_handicaps";
   info: {
-    displayName: 'handicap';
-    icon: 'chartBubble';
+    displayName: "handicap";
+    icon: "chartBubble";
   };
   attributes: {
     threshold: Attribute.Decimal;
@@ -14,11 +14,11 @@ export interface BetHandicap extends Schema.Component {
 }
 
 export interface BetOverUnder extends Schema.Component {
-  collectionName: 'components_bet_over_unders';
+  collectionName: "components_bet_over_unders";
   info: {
-    displayName: 'overUnder';
-    icon: 'check';
-    description: '';
+    displayName: "overUnder";
+    icon: "check";
+    description: "";
   };
   attributes: {
     threshold: Attribute.Decimal;
@@ -28,10 +28,10 @@ export interface BetOverUnder extends Schema.Component {
 }
 
 export interface MatchResult extends Schema.Component {
-  collectionName: 'components_match_results';
+  collectionName: "components_match_results";
   info: {
-    displayName: 'Result';
-    icon: 'briefcase';
+    displayName: "Result";
+    icon: "briefcase";
   };
   attributes: {
     firstTeamScore: Attribute.Integer;
@@ -39,12 +39,12 @@ export interface MatchResult extends Schema.Component {
   };
 }
 
-declare module '@strapi/types' {
+declare module "@strapi/types" {
   export module Shared {
     export interface Components {
-      'bet.handicap': BetHandicap;
-      'bet.over-under': BetOverUnder;
-      'match.result': MatchResult;
+      "bet.handicap": BetHandicap;
+      "bet.over-under": BetOverUnder;
+      "match.result": MatchResult;
     }
   }
 }

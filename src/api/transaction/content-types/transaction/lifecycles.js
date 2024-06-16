@@ -1,6 +1,8 @@
 const { errors } = require("@strapi/utils");
 const { ApplicationError } = errors;
 
+const _ = require("lodash");
+
 const TRANSACTION_TYPE = {
   RECHARGE: "recharge",
   WITHDRAW: "withdraw",
@@ -9,23 +11,14 @@ const TRANSACTION_TYPE = {
 module.exports = {
   async beforeCreate(event) {
     const { data } = event.params;
-    let userId;
 
-    const ctx = strapi.requestContext.get();
-    if (ctx.request.url.startsWith("/api")) {
-      userId = ctx.state.user.id;
-    } else if (ctx.request.url.startsWith("/content-manager")) {
-      userId = data.user?.connect[0]?.id;
-    }
+    const userId = data.user?.connect[0]?.id;
 
     if (userId) {
-      const user = await strapi.entityService.findOne(
-        "plugin::users-permissions.user",
-        userId
-      );
+      const user = await strapi.entityService.findOne("plugin::users-permissions.user", userId);
 
-      const balance = user.balance;
-      const amount = parseInt(data.amount, 10);
+      const balance = _.toNumber(user.balance);
+      const amount = _.toNumber(data.amount);
       const type = data.type;
 
       if (amount < 1) throw new ApplicationError("Tối thiểu là 1 chip!");
@@ -39,23 +32,14 @@ module.exports = {
   async afterCreate(event) {
     const { result } = event;
     const { data } = event.params;
-    let userId;
 
-    const ctx = strapi.requestContext.get();
-    if (ctx.request.url.startsWith("/api")) {
-      userId = ctx.state.user.id;
-    } else if (ctx.request.url.startsWith("/content-manager")) {
-      userId = data.user?.connect[0]?.id;
-    }
+    const userId = data.user?.connect[0]?.id;
 
     if (userId) {
-      const user = await strapi.entityService.findOne(
-        "plugin::users-permissions.user",
-        userId
-      );
+      const user = await strapi.entityService.findOne("plugin::users-permissions.user", userId);
 
-      let balance = user.balance;
-      const amount = result.amount;
+      let balance = _.toNumber(user.balance);
+      const amount = _.toNumber(result.amount);
       const type = result.type;
       const data = {};
 
@@ -64,13 +48,9 @@ module.exports = {
 
       data.balance = balance;
 
-      await strapi.entityService.update(
-        "plugin::users-permissions.user",
-        user.id,
-        {
-          data,
-        }
-      );
+      await strapi.entityService.update("plugin::users-permissions.user", user.id, {
+        data,
+      });
     }
   },
 };

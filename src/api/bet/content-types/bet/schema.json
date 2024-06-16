@@ -50,6 +50,16 @@
     },
     "loss": {
       "type": "decimal"
+    },
+    "handicap": {
+      "type": "component",
+      "repeatable": false,
+      "component": "bet.handicap"
+    },
+    "overUnder": {
+      "type": "component",
+      "repeatable": false,
+      "component": "bet.over-under"
     }
   }
 }

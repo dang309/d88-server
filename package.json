@@ -9,7 +9,13 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/eslint-parser": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "eslint": "^8",
+    "prettier": "^3.3.2"
+  },
   "dependencies": {
     "@strapi/plugin-cloud": "4.24.3",
     "@strapi/plugin-i18n": "4.24.3",

@@ -44,20 +44,19 @@
     },
     "handicap": {
       "type": "component",
-      "repeatable": false,
+      "repeatable": true,
       "component": "bet.handicap"
     },
     "overUnder": {
       "type": "component",
-      "repeatable": false,
+      "repeatable": true,
       "component": "bet.over-under"
     },
     "datetime": {
       "type": "datetime"
     },
     "code": {
-      "type": "uid",
-      "targetField": "firstTeamName"
+      "type": "uid"
     }
   }
 }
