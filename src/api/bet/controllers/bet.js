@@ -87,7 +87,8 @@ module.exports = createCoreController("api::bet.bet", ({ strapi }) => {
           },
         },
         fields: ["profit"],
-        limit: 9999,
+        limit: 99999,
+        sort: "profit:desc",
       });
 
       if (!_.isEmpty(bets)) {
@@ -101,12 +102,12 @@ module.exports = createCoreController("api::bet.bet", ({ strapi }) => {
               id: bet.user.id,
               username: bet.user.username,
               avatarUrl: bet.user.avatarUrl,
-              profit: 0,
+              profit: bet.profit,
             };
 
-            user.profit += bet.profit;
-
             data.push(user);
+          } else {
+            user.profit += bet.profit;
           }
         }
       }

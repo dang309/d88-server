@@ -611,6 +611,35 @@ export interface ApiBetBet extends Schema.CollectionType {
   };
 }
 
+export interface ApiJackpotJackpot extends Schema.SingleType {
+  collectionName: "jackpots";
+  info: {
+    singularName: "jackpot";
+    pluralName: "jackpots";
+    displayName: "Jackpot";
+    description: "";
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    amount: Attribute.Integer &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetMinMax<
+        {
+          min: 5;
+        },
+        number
+      > &
+      Attribute.DefaultTo<5>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<"api::jackpot.jackpot", "oneToOne", "admin::user"> & Attribute.Private;
+    updatedBy: Attribute.Relation<"api::jackpot.jackpot", "oneToOne", "admin::user"> & Attribute.Private;
+  };
+}
+
 export interface ApiMatchMatch extends Schema.CollectionType {
   collectionName: "matches";
   info: {
@@ -729,6 +758,7 @@ declare module "@strapi/types" {
       "plugin::users-permissions.user": PluginUsersPermissionsUser;
       "plugin::i18n.locale": PluginI18NLocale;
       "api::bet.bet": ApiBetBet;
+      "api::jackpot.jackpot": ApiJackpotJackpot;
       "api::match.match": ApiMatchMatch;
       "api::prediction.prediction": ApiPredictionPrediction;
       "api::prediction-result.prediction-result": ApiPredictionResultPredictionResult;

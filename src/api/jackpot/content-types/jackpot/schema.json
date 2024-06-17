@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "jackpots",
+  "info": {
+    "singularName": "jackpot",
+    "pluralName": "jackpots",
+    "displayName": "Jackpot",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "amount": {
+      "type": "integer",
+      "default": 5,
+      "required": true,
+      "unique": true,
+      "min": 5
+    }
+  }
+}

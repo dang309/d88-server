@@ -38,7 +38,7 @@ async function _updatePredictions(updatedMatch) {
   let userIdsWithCorrectPredictions = [];
 
   predictions.forEach((pred) => {
-    if (pred.firstTeamScore === matchResult.firstTeamScore && pred.secondTeamScore === matchResult.secondTeamScore)
+    if (pred.firstTeamScore == matchResult.firstTeamScore && pred.secondTeamScore == matchResult.secondTeamScore)
       userIdsWithCorrectPredictions.push(pred?.user?.id);
   });
 
@@ -55,7 +55,15 @@ async function _updatePredictions(updatedMatch) {
 
       if (items && items.length) continue;
 
-      let prize = predictions.length / userIdsWithCorrectPredictions.length;
+      const jackpot = await strapi.entityService.findMany("api::jackpot.jackpot", {
+        fields: ["amount"],
+      });
+
+      let prize = 0;
+
+      if (jackpot) {
+        prize = _.toNumber(jackpot.amount) / userIdsWithCorrectPredictions.length;
+      }
 
       await strapi.entityService.create("api::prediction-result.prediction-result", {
         data: {
@@ -68,7 +76,7 @@ async function _updatePredictions(updatedMatch) {
 
       const user = await strapi.entityService.findOne("plugin::users-permissions.user", userId);
 
-      const balance = user.balance + prize;
+      const balance = _.toNumber(user.balance) + _.toNumber(prize);
 
       await strapi.entityService.update("plugin::users-permissions.user", userId, {
         data: {
