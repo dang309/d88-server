@@ -59,10 +59,19 @@ module.exports = createCoreController("api::prediction.prediction", ({ strapi })
 
       balance += 1;
 
+      const jackpot = await strapi.entityService.findMany("api::jackpot.jackpot", {
+        fields: ["amount"],
+      });
+
       const response = await Promise.all([
         super.delete(ctx),
         strapi.services["plugin::users-permissions.user"].edit(user.id, {
           balance,
+        }),
+        strapi.entityService.update("api::jackpot.jackpot", 1, {
+          data: {
+            amount: jackpot.amount - 1,
+          },
         }),
       ]);
 
