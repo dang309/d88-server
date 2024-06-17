@@ -1,5 +1,7 @@
 const _ = require("lodash");
 
+const MIN_JACK_POT = 5;
+
 module.exports = {
   async beforeCreate(event) {
     const { data } = event.params;
@@ -35,26 +37,21 @@ async function _updatePredictions(updatedMatch) {
     populate: "user",
   });
 
-  let userIdsWithCorrectPredictions = [];
+  let correctPreds = [];
 
-  predictions.forEach((pred) => {
+  for (const pred of predictions) {
+    if (!_.isNil(pred.isCorrect) || !_.isNil(pred.isCelebrated)) continue;
     if (pred.firstTeamScore == matchResult.firstTeamScore && pred.secondTeamScore == matchResult.secondTeamScore)
-      userIdsWithCorrectPredictions.push(pred?.user?.id);
-  });
-
-  if (userIdsWithCorrectPredictions.length) {
-    userIdsWithCorrectPredictions = Array.from(new Set(userIdsWithCorrectPredictions));
-
-    for (const userId of userIdsWithCorrectPredictions) {
-      const code = `${matchId}-${userId}`;
-      const items = await strapi.entityService.findMany("api::prediction-result.prediction-result", {
-        filters: {
-          code,
-        },
+      correctPreds.push({
+        userId: pred?.user?.id,
+        predictionId: pred.id,
       });
+  }
 
-      if (items && items.length) continue;
+  if (correctPreds.length) {
+    correctPreds = _.uniqBy(correctPreds, "userId");
 
+    for (const correctPred of correctPreds) {
       const jackpot = await strapi.entityService.findMany("api::jackpot.jackpot", {
         fields: ["amount"],
       });
@@ -62,27 +59,31 @@ async function _updatePredictions(updatedMatch) {
       let prize = 0;
 
       if (jackpot) {
-        prize = _.toNumber(jackpot.amount) / userIdsWithCorrectPredictions.length;
+        prize = _.toNumber(jackpot.amount) / correctPreds.length;
       }
 
-      await strapi.entityService.create("api::prediction-result.prediction-result", {
-        data: {
-          match: matchId,
-          winner: userId,
-          code,
-          prize,
-        },
-      });
-
-      const user = await strapi.entityService.findOne("plugin::users-permissions.user", userId);
-
+      const user = await strapi.entityService.findOne("plugin::users-permissions.user", correctPred.userId);
       const balance = _.toNumber(user.balance) + _.toNumber(prize);
 
-      await strapi.entityService.update("plugin::users-permissions.user", userId, {
-        data: {
-          balance,
-        },
-      });
+      await Promise.all([
+        strapi.entityService.update("plugin::users-permissions.user", correctPred.userId, {
+          data: {
+            balance,
+          },
+        }),
+        strapi.entityService.update("api::prediction.prediction", correctPred.predictionId, {
+          data: {
+            isCorrect: true,
+            isCelebrated: false,
+            prize,
+          },
+        }),
+        strapi.entityService.update("api::jackpot.jackpot", 1, {
+          data: {
+            amount: MIN_JACK_POT,
+          },
+        }),
+      ]);
     }
   }
 }

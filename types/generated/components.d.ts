@@ -39,12 +39,25 @@ export interface MatchResult extends Schema.Component {
   };
 }
 
+export interface SystemSystem extends Schema.Component {
+  collectionName: "components_setting_systems";
+  info: {
+    displayName: "Setting";
+    icon: "walk";
+    description: "";
+  };
+  attributes: {
+    isCelebrated: Attribute.Boolean;
+  };
+}
+
 declare module "@strapi/types" {
   export module Shared {
     export interface Components {
       "bet.handicap": BetHandicap;
       "bet.over-under": BetOverUnder;
       "match.result": MatchResult;
+      "system.system": SystemSystem;
     }
   }
 }

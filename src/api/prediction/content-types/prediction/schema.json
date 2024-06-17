@@ -27,6 +27,15 @@
     },
     "secondTeamScore": {
       "type": "integer"
+    },
+    "isCorrect": {
+      "type": "boolean"
+    },
+    "prize": {
+      "type": "decimal"
+    },
+    "isCelebrated": {
+      "type": "boolean"
     }
   }
 }

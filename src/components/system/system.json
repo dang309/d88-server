@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_setting_systems",
+  "info": {
+    "displayName": "Setting",
+    "icon": "walk",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "isCelebrated": {
+      "type": "boolean"
+    }
+  }
+}

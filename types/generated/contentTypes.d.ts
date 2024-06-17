@@ -686,34 +686,13 @@ export interface ApiPredictionPrediction extends Schema.CollectionType {
     match: Attribute.Relation<"api::prediction.prediction", "oneToOne", "api::match.match">;
     firstTeamScore: Attribute.Integer;
     secondTeamScore: Attribute.Integer;
+    isCorrect: Attribute.Boolean;
+    prize: Attribute.Decimal;
+    isCelebrated: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<"api::prediction.prediction", "oneToOne", "admin::user"> & Attribute.Private;
     updatedBy: Attribute.Relation<"api::prediction.prediction", "oneToOne", "admin::user"> & Attribute.Private;
-  };
-}
-
-export interface ApiPredictionResultPredictionResult extends Schema.CollectionType {
-  collectionName: "prediction_results";
-  info: {
-    singularName: "prediction-result";
-    pluralName: "prediction-results";
-    displayName: "Prediction Result";
-    description: "";
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    match: Attribute.Relation<"api::prediction-result.prediction-result", "oneToOne", "api::match.match">;
-    winner: Attribute.Relation<"api::prediction-result.prediction-result", "oneToOne", "plugin::users-permissions.user">;
-    prize: Attribute.Integer;
-    isRead: Attribute.Boolean & Attribute.DefaultTo<false>;
-    code: Attribute.UID;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<"api::prediction-result.prediction-result", "oneToOne", "admin::user"> & Attribute.Private;
-    updatedBy: Attribute.Relation<"api::prediction-result.prediction-result", "oneToOne", "admin::user"> & Attribute.Private;
   };
 }
 
@@ -761,7 +740,6 @@ declare module "@strapi/types" {
       "api::jackpot.jackpot": ApiJackpotJackpot;
       "api::match.match": ApiMatchMatch;
       "api::prediction.prediction": ApiPredictionPrediction;
-      "api::prediction-result.prediction-result": ApiPredictionResultPredictionResult;
       "api::transaction.transaction": ApiTransactionTransaction;
     }
   }
