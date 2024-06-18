@@ -60,6 +60,9 @@
       "type": "component",
       "repeatable": false,
       "component": "bet.over-under"
+    },
+    "isCelebrated": {
+      "type": "boolean"
     }
   }
 }

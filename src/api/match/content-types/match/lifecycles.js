@@ -122,6 +122,7 @@ async function _updateBetResult(updatedMatch) {
     let _winOrLoseType = winOrLoseType || "";
     let profit = 0;
     let loss = 0;
+    let isCelebrated = null;
 
     const _user = await strapi.entityService.findOne("plugin::users-permissions.user", user.id);
 
@@ -244,6 +245,7 @@ async function _updateBetResult(updatedMatch) {
       else if (_winOrLoseType === "winHalf") profit = maxProfit / 2;
 
       balance += amount + profit;
+      isCelebrated = false;
     } else if (_winOrLoseType.startsWith("lose")) {
       if (_winOrLoseType === "loseFull") loss = amount;
       else if (_winOrLoseType === "loseHalf") {
@@ -263,6 +265,7 @@ async function _updateBetResult(updatedMatch) {
         profit,
         loss,
         winOrLoseType: _winOrLoseType,
+        isCelebrated,
       },
     });
   }
