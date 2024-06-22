@@ -50,6 +50,8 @@ module.exports = createCoreController("api::bet.bet", ({ strapi }) => {
 
         bet.amount += amount;
 
+        if (bet.amount > MAX_BET_AMOUNT) return ctx.badRequest(`Tiền cược tối đa là ${MAX_BET_AMOUNT} chip!`);
+
         await Promise.all([
           strapi.entityService.update("api::bet.bet", bet.id, {
             data: {
