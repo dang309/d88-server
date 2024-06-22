@@ -29,7 +29,7 @@ module.exports = createCoreController("api::prediction.prediction", ({ strapi })
 
       if (!_.isEmpty(existedPredictions)) return ctx.badRequest("Chỉ được đặt 1 tỉ số/ trận.");
 
-      let balance = parseInt(user?.balance, 10) || 0;
+      let balance = _.toNumber(user?.balance) ?? 0;
 
       if (balance < 1) return ctx.badRequest("Không đủ chip");
 
@@ -55,7 +55,7 @@ module.exports = createCoreController("api::prediction.prediction", ({ strapi })
     },
     async delete(ctx) {
       const user = ctx.state.user;
-      let balance = parseInt(user?.balance, 10) || 0;
+      let balance = _.toNumber(user?.balance) ?? 0;
 
       balance += 1;
 
